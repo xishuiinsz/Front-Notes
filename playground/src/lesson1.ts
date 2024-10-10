@@ -13,7 +13,7 @@ interface Point3D {
   y: number;
   z: number;
 }
-
+ 
 const p1: Point = { x: 100, y: 200 };
 let p2: Point3D;
 p2 = p1;
