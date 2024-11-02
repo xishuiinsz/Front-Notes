@@ -11,6 +11,10 @@
     7、行内元素的水平方向的padding-left,padding-right,margin-left,margin-right有效，但是竖直方向的padding-top,padding-bottom,margin-top,margin-bottom无效，即水平方向有效，而垂直方向无效；
   </details>
 
+- <details><summary>1个父元素有3个子元素，请使用Flex布局方式使得3个子元素在水平方向均分父元素？</summary>
+  父元素：display: flex; 子元素：flex: 1 0 0;
+  </details>
+
 - <details><summary>请使用最少 2 种方式来实现子元素在父元素中水平垂直居中，假定父子元素均为块级元素，且大小不定。</summary>
   1、定位法：父元素：position: relative; ，子元素：position: absolute; left: 50%; top: 50%;transfrom: translate(-50%,-50%);<br/> 
   2、弹性布局; 父元素：display: flex；justify-content: center;align-items: center;<br/>
@@ -24,9 +28,15 @@
   1.mouseover经过自身盒子触发，经过子盒子也触发，用于冒泡特性<br/>
   2.mouseenter只经过自身盒子触发，没有冒泡特性  
   </details>
-- 请实现一个蛇形布局，假定：大概有 40 个节点、等高不等宽、
+- <details><summary>请实现一个蛇形布局，假定：vue3组件场景下、大概有 40 个节点、等高不等宽、 每行为两端对齐、节点之间使用带箭头的线条连接</summary>
+  参看答案：假定所有节点的父元素为nodes-list<br/>
+  初始化时,为nodes-list设置css属性 visibility: hidden，display: flex; flex-wrap: wrap; justity-content: space-between;<br/>
+  在蛇形布局成型之后再恢复为visibility: visible<br/>
+  在vue3的onMounted钩子函数中计算全部节点排列的行数。<br/>
+  ddd<br/>
+  </details>
 
-- 请为下列函数添加 typescript 类型注释
+- 请为下列函数添加 typescript 类型注解
   ```javascript
   // 交换2个元素
   const swap = ([a, b]) => {
