@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://scroll-driven-animations.style/demos/stacking-cards/css/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Scroll-driven Animations: Stacking Cards (CSS)</title>
+
+	<!-- Popover Polyfill -->
+	<script src="./static/popover.iife.min.js.下载" type="module"></script>
+
+
+	<!-- Page specific styles. The code for the scroll-driven animations is kept in a local style block for your reading convenience -->
+	<link rel="stylesheet" href="./static/styles.css">
+	<style>
+		@supports (animation-timeline: view()) {
+			.card {
+				--index0: calc(var(--index) - 1); /* 0-based index */
+				--reverse-index: calc(var(--numcards) - var(--index0)); /* reverse index */
+				--reverse-index0: calc(var(--reverse-index) - 1); /* 0-based reverse index */
+			}
+
+			@keyframes scale {
+				to {
+					transform:
+						scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
+				}
+			}
+
+			#cards {
+				--numcards: 4;
+				view-timeline-name: --cards-element-scrolls-in-body;
+			}
+
+			.card__content {
+				--start-range: calc(var(--index0) / var(--numcards) * 100%);
+				--end-range: calc((var(--index)) / var(--numcards) * 100%);
+
+				animation: linear scale forwards;
+				animation-timeline: --cards-element-scrolls-in-body;
+				animation-range: exit-crossing var(--start-range) exit-crossing var(--end-range);
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<!-- metabox -->
+	<div id="metabox">
+		<button id="version-selector" popovertarget="version-selector-popover" data-activeversion="1/2" data-activelang="css">🔀</button>
+		<div id="version-selector-popover" popover="" anchor="version-selector">
+		  <h1>Version selector</h1>
+		  <p>This demo has several versions:</p>
+		  <ol>
+			<li data-lang="css" data-selected=""><a href="https://scroll-driven-animations.style/demos/stacking-cards/css/">CSS <code>scroll-timeline</code></a></li>
+			<li data-lang="js"><a href="https://scroll-driven-animations.style/demos/stacking-cards/waapi/">JavaScript WAAPI + <code>ScrollTimeline</code></a></li>
+		  </ol>
+		</div>
+		<a class="button" href="https://scroll-driven-animations.style/" title="To index">🏠</a>
+		<button id="infobox-toggle" title="Show Information about this demo">ℹ️</button>
+		<dialog id="infobox">
+			<form method="dialog"><button id="infobox-close" tabindex="0" title="Close dialog">❌</button></form>
+			<h1>About this demo</h1>
+			<p>In this demo the cards at the top stack onto each other. When a card is stuck, it scales down so that the following card stacks on top of it.</p>
+			<p>Original demo by CodeHouse: <a href="https://codyhouse.co/tutorials/how-stacking-cards">https://codyhouse.co/tutorials/how-stacking-cards</a></p>
+
+			<h2>The Code</h2>
+			<pre><code>.card {
+	--index0: calc(var(--index) - 1); /* 0-based index */
+	--reverse-index: calc(var(--numcards) - var(--index0)); /* reverse index */
+	--reverse-index0: calc(var(--reverse-index) - 1); /* 0-based reverse index */
+}
+
+@keyframes scale {
+	to {
+		transform:
+			scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
+	}
+}
+
+#cards {
+	--numcards: 4;
+	view-timeline-name: --cards-element-scrolls-in-body;
+}
+
+.card__content {
+	--start-range: calc(var(--index0) / var(--numcards) * 100%);
+	--end-range: calc((var(--index)) / var(--numcards) * 100%);
+
+	animation: linear scale forwards;
+	animation-timeline: --cards-element-scrolls-in-body;
+	animation-range: exit-crossing var(--start-range) exit-crossing var(--end-range);
+}</code></pre>
+
+			<h2>Explanation</h2>
+			<p>To keep the cards stuck, <code>position: sticky</code> is used. Key for this part, is that this stickiness is not applied on the cards themselves (<code>.card</code>) but on the inner <code>.card__content</code>.</p>
+			<p>As for the animation, the key part is that the wrapping element <code>#cards</code> is being tracked on the <code>entry-crossing</code> range.</p>
+			<p>The content of each card (<code>.card__content</code>) are animated and are assigned to a part of that range. As this demo contains <code>4</code> cards, each card should animate over <code>25%</code> of the range. This is calculated using the <code>--numcards</code> and <code>--index</code> custom properties.</p>
+			<p>By animating the <code>.card__content</code> elements and not the <code>.card</code> elements, the height of the <code>#cards</code> wrapper – and thus the available scroll estate – is not affected.</p>
+		</dialog>
+	</div>
+
+	<div class="warning">
+		<p>⚠️ Your browser does not support Scroll-driven Animations. Please use Chrome 115 or newer.</p>
+	</div>
+
+	<input type="checkbox" id="debug">
+
+	<header>
+		<div>
+			<h1>Stacking Cards</h1>
+			<p>👇 Scroll down to see the effect.</p>
+		</div>
+	</header>
+	<main>
+		<ul id="cards">
+			<li class="card" id="card_1">
+				<div class="card__content">
+					<div>
+						<h2>Card One</h2>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+						<p><a href="https://scroll-driven-animations.style/demos/stacking-cards/css/#top" class="btn btn--accent">Read more</a></p>
+					</div>
+					<figure>
+						<img src="./static/img-1.jpg" alt="Image description">
+					</figure>
+				</div>
+			</li>
+			<li class="card" id="card_2">
+				<div class="card__content">
+					<div>
+						<h2>Card Two</h2>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+						<p><a href="https://scroll-driven-animations.style/demos/stacking-cards/css/#top" class="btn btn--accent">Read more</a></p>
+					</div>
+					<figure>
+						<img src="./static/img-2.jpg" alt="Image description">
+					</figure>
+				</div>
+			</li>
+			<li class="card" id="card_3">
+				<div class="card__content">
+					<div>
+						<h2>Card Three</h2>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+						<p><a href="https://scroll-driven-animations.style/demos/stacking-cards/css/#top" class="btn btn--accent">Read more</a></p>
+					</div>
+					<figure>
+						<img src="./static/img-3.jpg" alt="Image description">
+					</figure>
+				</div>
+			</li>
+			<li class="card" id="card_4">
+				<div class="card__content">
+					<div>
+						<h2>Card Four</h2>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+						<p><a href="https://scroll-driven-animations.style/demos/stacking-cards/css/#top" class="btn btn--accent">Read more</a></p>
+					</div>
+					<figure>
+						<img src="./static/img-2.jpg" alt="Image description">
+					</figure>
+				</div>
+			</li>
+		</ul>
+	</main>
+	<aside>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem repellat non ratione eum provident quaerat obcaecati dicta autem voluptates sit cum quis distinctio, atque sint commodi reprehenderit perspiciatis iure velit molestiae eos molestias ipsa nihil quia? Porro tempore in fugit, aspernatur et temporibus aliquam magnam adipisci deleniti dicta repellat alias nostrum impedit quidem odit excepturi nam. Itaque numquam unde quae dignissimos exercitationem placeat, ipsa amet tempora vitae ullam animi! Hic asperiores in esse atque expedita dolorem officia illo commodi fugit earum ab, assumenda optio, sed repellat. Maiores laudantium reprehenderit suscipit accusamus assumenda, debitis nemo ut sapiente numquam doloremque alias explicabo minus autem harum illum dicta. Unde obcaecati inventore repellat id eligendi eaque, rerum aliquam maiores aspernatur cumque tenetur quo qui mollitia atque quasi voluptate ipsum neque explicabo voluptatem quibusdam beatae quae iste vero doloribus! Natus libero quibusdam molestias harum atque, assumenda doloribus quis, quam corporis, voluptas suscipit magni! Enim sapiente totam consequatur repellat maxime placeat perferendis iste maiores soluta, obcaecati incidunt expedita eius cumque ipsa quo sed. Minus distinctio culpa cumque labore nulla laborum ex, explicabo magni mollitia eaque aliquam vero blanditiis quae, id necessitatibus error voluptas harum tempora sint porro. Facilis beatae quasi soluta et ipsum suscipit repellendus inventore.</p>
+
+		<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, ipsam molestias. Fuga similique, dolor tempora rerum perferendis ipsam ullam doloribus beatae esse facilis quae sit excepturi expedita non, sunt accusantium magnam? Animi nesciunt nostrum eligendi iusto voluptatum hic qui. Quod distinctio qui nobis et doloremque. Fuga, itaque? Laborum dignissimos nobis quaerat optio voluptatum similique unde, neque cupiditate, vel, fugiat dolore? Accusantium neque deserunt ducimus enim, illum laborum magni ipsam eos optio aspernatur nam necessitatibus quod natus, dolor laboriosam illo velit.</p>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem repellat non ratione eum provident quaerat obcaecati dicta autem voluptates sit cum quis distinctio, atque sint commodi reprehenderit perspiciatis iure velit molestiae eos molestias ipsa nihil quia? Porro tempore in fugit, aspernatur et temporibus aliquam magnam adipisci deleniti dicta repellat alias nostrum impedit quidem odit excepturi nam. Itaque numquam unde quae dignissimos exercitationem placeat, ipsa amet tempora vitae ullam animi! Hic asperiores in esse atque expedita dolorem officia illo commodi fugit earum ab, assumenda optio, sed repellat. Maiores laudantium reprehenderit suscipit accusamus assumenda, debitis nemo ut sapiente numquam doloremque alias explicabo minus autem harum illum dicta. Unde obcaecati inventore repellat id eligendi eaque, rerum aliquam maiores aspernatur cumque tenetur quo qui mollitia atque quasi voluptate ipsum neque explicabo voluptatem quibusdam beatae quae iste vero doloribus! Natus libero quibusdam molestias harum atque, assumenda doloribus quis, quam corporis, voluptas suscipit magni! Enim sapiente totam consequatur repellat maxime placeat perferendis iste maiores soluta, obcaecati incidunt expedita eius cumque ipsa quo sed. Minus distinctio culpa cumque labore nulla laborum ex, explicabo magni mollitia eaque aliquam vero blanditiis quae, id necessitatibus error voluptas harum tempora sint porro. Facilis beatae quasi soluta et ipsum suscipit repellendus inventore.</p>
+
+		<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, ipsam molestias. Fuga similique, dolor tempora rerum perferendis ipsam ullam doloribus beatae esse facilis quae sit excepturi expedita non, sunt accusantium magnam? Animi nesciunt nostrum eligendi iusto voluptatum hic qui. Quod distinctio qui nobis et doloremque. Fuga, itaque? Laborum dignissimos nobis quaerat optio voluptatum similique unde, neque cupiditate, vel, fugiat dolore? Accusantium neque deserunt ducimus enim, illum laborum magni ipsam eos optio aspernatur nam necessitatibus quod natus, dolor laboriosam illo velit.</p>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem repellat non ratione eum provident quaerat obcaecati dicta autem voluptates sit cum quis distinctio, atque sint commodi reprehenderit perspiciatis iure velit molestiae eos molestias ipsa nihil quia? Porro tempore in fugit, aspernatur et temporibus aliquam magnam adipisci deleniti dicta repellat alias nostrum impedit quidem odit excepturi nam. Itaque numquam unde quae dignissimos exercitationem placeat, ipsa amet tempora vitae ullam animi! Hic asperiores in esse atque expedita dolorem officia illo commodi fugit earum ab, assumenda optio, sed repellat. Maiores laudantium reprehenderit suscipit accusamus assumenda, debitis nemo ut sapiente numquam doloremque alias explicabo minus autem harum illum dicta. Unde obcaecati inventore repellat id eligendi eaque, rerum aliquam maiores aspernatur cumque tenetur quo qui mollitia atque quasi voluptate ipsum neque explicabo voluptatem quibusdam beatae quae iste vero doloribus! Natus libero quibusdam molestias harum atque, assumenda doloribus quis, quam corporis, voluptas suscipit magni! Enim sapiente totam consequatur repellat maxime placeat perferendis iste maiores soluta, obcaecati incidunt expedita eius cumque ipsa quo sed. Minus distinctio culpa cumque labore nulla laborum ex, explicabo magni mollitia eaque aliquam vero blanditiis quae, id necessitatibus error voluptas harum tempora sint porro. Facilis beatae quasi soluta et ipsum suscipit repellendus inventore.</p>
+
+		<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, ipsam molestias. Fuga similique, dolor tempora rerum perferendis ipsam ullam doloribus beatae esse facilis quae sit excepturi expedita non, sunt accusantium magnam? Animi nesciunt nostrum eligendi iusto voluptatum hic qui. Quod distinctio qui nobis et doloremque. Fuga, itaque? Laborum dignissimos nobis quaerat optio voluptatum similique unde, neque cupiditate, vel, fugiat dolore? Accusantium neque deserunt ducimus enim, illum laborum magni ipsam eos optio aspernatur nam necessitatibus quod natus, dolor laboriosam illo velit.</p>
+	</aside>
+
+
+
+</body></html>
