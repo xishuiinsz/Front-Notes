@@ -4,6 +4,11 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="rPBbnJXTIxey4i3mNGn3-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="27AsPqgmucFq3u5LgzO5-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="27AsPqgmucFq3u5LgzO5-1" value="&amp;lt;root-component /&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;align=left;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="230" y="10" width="290" height="60" as="geometry" />
         </mxCell>
@@ -24,6 +29,11 @@
         </mxCell>
         <mxCell id="rPBbnJXTIxey4i3mNGn3-6" value="&amp;lt;child3-component /&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;align=left;verticalAlign=top;" vertex="1" parent="1">
           <mxGeometry x="500" y="220" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rPBbnJXTIxey4i3mNGn3-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;arcSize=2;" edge="1" parent="1" source="27AsPqgmucFq3u5LgzO5-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="210" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
